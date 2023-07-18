@@ -6,7 +6,7 @@
   <title>个人主页</title>
   <style>
     body {
-      background-color: #FCEFF5; /* 设置背景色为粉色 */
+      background-color: #FCEFF5;
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -14,7 +14,7 @@
     }
 
     #sidebar {
-      background-color: #F8E6ED; /* 设置侧边栏背景色为浅粉色 */
+      background-color: #F8E6ED;
       width: 20%;
       padding: 20px;
     }
@@ -33,12 +33,38 @@
     #content {
       flex: 1;
       padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .container {
+      width: 47%;
+      background-color: #FDEBF2;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
     .btn {
       display: inline-block;
       padding: 10px 20px;
-      background-color: #FF4961; /* 设置按钮背景色为红色 */
+      background-color: #FF4961;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      margin: 0 5px;
+      padding: 5px 10px;
+      background-color: #FF4961;
       color: white;
       text-decoration: none;
       border-radius: 5px;
@@ -56,12 +82,17 @@
       text-align: center;
       padding: 20px;
       border-radius: 5px;
+      z-index: 999;
     }
 
     #close {
       color: red;
       float: right;
       cursor: pointer;
+    }
+
+    .file-list {
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -75,15 +106,25 @@
     <a class="btn" href="#">设置</a>
   </div>
   <div id="content">
-    <h1>上传展示图片及文件</h1>
-    <!-- 图片和文件上传的表单 -->
-    <h1>发表文章</h1>
-    <!-- 富文本编辑器用于发表文章 -->
-    <h1>展示文章</h1>
-    <!-- 展示文章的内容 -->
-    <div id="pagination">
-      <!-- 分页导航 -->
+    <div class="container">
+      <h1>上传展示图片及文件</h1>
+      <!-- 图片和文件上传的表单 -->
+      <h2>已上传的文件</h2>
+      <div class="file-list">
+        <!-- 展示已上传的文件 -->
+      </div>
     </div>
+    <div class="container">
+      <h1>发表文章</h1>
+      <!-- 富文本编辑器用于发表文章 -->
+    </div>
+    <div class="container">
+      <h1>展示文章</h1>
+      <!-- 展示文章的内容 -->
+    </div>
+  </div>
+  <div class="pagination">
+    <!-- 分页导航 -->
   </div>
   <div id="popup">
     <span id="close">关闭</span>
@@ -102,6 +143,28 @@
     document.querySelector("#close").addEventListener("click", function() {
       document.getElementById("popup").style.display = "none";
     });
+
+    // 页面加载完成后获取已上传的文件列表并展示
+    document.addEventListener("DOMContentLoaded", function() {
+      var fileListContainer = document.querySelector(".file-list");
+      var files = ["file1.jpg", "file2.jpg", "file3.jpg"]; // 示例已上传文件的文件名数组
+
+      files.forEach(function(file) {
+        var listItem = document.createElement("p");
+        listItem.textContent = file;
+        fileListContainer.appendChild(listItem);
+      });
+    });
+
+    // 分页导航点击事件示例
+    var paginationContainer = document.querySelector(".pagination");
+
+    for (var i = 1; i <= 5; i++) {
+      var pageLink = document.createElement("a");
+      pageLink.href = "#";
+      pageLink.textContent = i;
+      paginationContainer.appendChild(pageLink);
+    }
   </script>
 </body>
 </html>
