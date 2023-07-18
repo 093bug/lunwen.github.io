@@ -1,174 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>个人主页</title>
-  <style>
-    body {
-      background-color: #FCEFF5;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
+<meta charset="UTF-8">
+<title>个人主页</title>
+<style>
+body {
+background-color: #000;
+color: #fff;
+font-family: Arial, sans-serif;
+}
+#container {
+display: flex;
+}
+#sidebar {
+width: 200px;
+background-color: #333;
+padding: 20px;
+}
+#sidebar img {
+width: 100px;
+height: 100px;
+border-radius: 50%;
+margin-bottom: 10px;
+}
+#main-content {
+flex-grow: 1;
+padding: 20px;
+}
+h1, h2 {
+color: #fff;
+}
+.upload-section {
+background-color: #222;
+padding: 20px;
+margin-bottom: 20px;
+}
+.article {
+background-color: #444;
+padding: 20px;
+margin-bottom: 20px;
+}
+#settings {
+position: absolute;
+top: 20px;
+right: 20px;
+}
+#settings button {
+background-color: #666;
+color: #fff;
+border: none;
+padding: 5px 10px;
+margin-left: 10px;
+cursor: pointer;
+/* 添加头像上传弹窗相关样式 */
+#overlay {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(255, 255, 255, 0.8);
+z-index: 999;
+}
+    #upload-popup {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        text-align: center;
     }
+    
+    #upload-popup h2 {
+        color: #000;
+    }
+    
+    #upload-popup input[type="file"] {
+        margin-bottom: 10px;
+    }
+    
+    #upload-popup button {
+        background-color: #666;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+    
+    #upload-popup .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: red;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    /* 添加富文本编辑器的样式 */
+    .editor {
+        background-color: #fff;
+        color: #000;
+        padding: 20px;
+    }
+    .editor button {
+        background-color: #666;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+</style>
 
-    #sidebar {
-      background-color: #F8E6ED;
-      width: 20%;
-      padding: 20px;
-    }
-
-    #profile {
-      text-align: center;
-      margin-bottom: 20px;
-      cursor: pointer;
-    }
-
-    #profile img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-    }
-
-    #content {
-      flex: 1;
-      padding: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .container {
-      width: 47%;
-      background-color: #FDEBF2;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #FF4961;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    .pagination {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .pagination a {
-      margin: 0 5px;
-      padding: 5px 10px;
-      background-color: #FF4961;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-
-    #popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      height: 300px;
-      background-color: white;
-      text-align: center;
-      padding: 20px;
-      border-radius: 5px;
-      z-index: 999;
-    }
-
-    #close {
-      color: red;
-      float: right;
-      cursor: pointer;
-    }
-
-    .file-list {
-      margin-top: 10px;
-    }
-  </style>
 </head>
 <body>
-  <div id="sidebar">
-    <div id="profile">
-      <img src="avatar.jpg" alt="头像">
-      <h2>个人简介</h2>
-      <p>基础的个人信息</p>
-    </div>
-    <a class="btn" href="#">设置</a>
-  </div>
-  <div id="content">
-    <div class="container">
-      <h1>上传展示图片及文件</h1>
-      <!-- 图片和文件上传的表单 -->
-      <h2>已上传的文件</h2>
-      <div class="file-list">
-        <!-- 展示已上传的文件 -->
-      </div>
-    </div>
-    <div class="container">
-      <h1>发表文章</h1>
-      <!-- 富文本编辑器用于发表文章 -->
-    </div>
-    <div class="container">
-      <h1>展示文章</h1>
-      <!-- 展示文章的内容 -->
-    </div>
-  </div>
-  <div class="pagination">
-    <!-- 分页导航 -->
-  </div>
-  <div id="popup">
-    <span id="close">关闭</span>
-    <h2>上传头像</h2>
-    <!-- 头像上传表单 -->
-    <button class="btn">提交</button>
-  </div>
-
-  <script>
-    // 弹出、关闭头像上传弹窗
-    var profileImage = document.querySelector("#profile img");
-    var popup = document.getElementById("popup");
-    var closeBtn = document.querySelector("#close");
-
-    profileImage.addEventListener("click", function() {
-      popup.style.display = "block";
-    });
-
-    closeBtn.addEventListener("click", function() {
-      popup.style.display = "none";
-    });
-
-    // 页面加载完成后获取已上传的文件列表并展示
-    document.addEventListener("DOMContentLoaded", function() {
-      var fileListContainer = document.querySelector(".file-list");
-      var files = ["file1.jpg", "file2.jpg", "file3.jpg"]; // 示例已上传文件的文件名数组
-
-      files.forEach(function(file) {
-        var listItem = document.createElement("p");
-        listItem.textContent = file;
-        fileListContainer.appendChild(listItem);
-      });
-    });
-
-    // 分页导航点击事件示例
-    var paginationContainer = document.querySelector(".pagination");
-
-    for (var i = 1; i <= 5; i++) {
-      var pageLink = document.createElement("a");
-      pageLink.href = "#";
-      pageLink.textContent = i;
-      paginationContainer.appendChild(pageLink);
+<!-- 省略其他内容 -->
+<!-- 添加头像上传弹窗 -->
+<div id="overlay">
+<div id="upload-popup">
+<span class="close" onclick="closeUploadPopup()">✖</span>
+<h2>上传头像</h2>
+<input type="file" id="upload-avatar" accept="image/*">
+<button onclick="uploadAvatar()">上传</button>
+</div>
+</div>
+}
+</style>
+</head>
+<body>
+<div id="container">
+<div id="sidebar">
+<h1>个人简介</h1>
+<img id="avatar" src="avatar.jpg" alt="个人头像">
+<p id="name">姓名：Loading...</p>
+<p id="age">年龄：Loading...</p>
+<p id="location">所在地：Loading...</p>
+</div>
+<div id="main-content">
+<div class="upload-section">
+<h2>上传图片</h2>
+<input type="file" id="image-upload">
+<button onclick="uploadImage()">上传</button>
+</div>
+<div class="upload-section">
+<h2>上传文件</h2>
+<input type="file" id="file-upload">
+<button onclick="uploadFile()">上传</button>
+</div>
+<div class="article">
+<h2>发表文章</h2>
+<!-- 在这里添加发表文章的表单 -->
+</div>
+<div class="article">
+<h2>展示文章</h2>
+<!-- 在这里展示已发布的文章 -->
+</div>
+</div>
+</div>
+<div id="settings">
+<button onclick="openSettings()">设置</button>
+</div>
+<div id="overlay" style="display: none;">
+<div id="settings-popup">
+<h2>设置</h2>
+<input type="text" id="new-name" placeholder="新姓名"><br>
+<input type="text" id="new-age" placeholder="新年龄"><br>
+<button onclick="saveSettings()">保存</button>
+<button onclick="closeSettings()">取消</button>
+</div>
+</div>
+<!-- 添加发表文章功能 -->
+<div class="article">
+<h2>发表文章</h2>
+<div id="editor" class="editor">
+<!-- 这里是富文本编辑器的容器 -->
+</div>
+<button onclick="publishArticle()">发表</button>
+</div>
+<script>
+    // 生成随机数据
+    // function generateRandomData() {
+    //     const names = ["张三", "李四", "王五", "赵六"];
+    //     const locations = ["北京", "上海", "广州", "深圳", "成都"];
+    //     const ages = [20, 25, 30, 35, 40];
+    
+    //     const randomIndex = Math.floor(Math.random() * names.length);
+    //     const randomName = names[randomIndex];
+    //     const randomLocation = locations[randomIndex];
+    //     const randomAge = ages[randomIndex];
+    
+    //     return {
+    //         name: randomName,
+    //         location: randomLocation,
+    //         age: randomAge
+    //     };
+    // }
+    
+    // 更新个人信息展示
+    function updateProfile() {
+        const profile = generateRandomData();
+        document.getElementById('name').textContent = "姓名：" + profile.name;
+        document.getElementById('age').textContent = "年龄：" + profile.age;
+        document.getElementById('location').textContent = "所在地：" + profile.location;
     }
-  </script>
+    
+    // 页面加载完成后更新个人信息
+    window.onload = function() {
+        updateProfile();
+    };
+    // 上传图片
+    function uploadImage() {
+        const fileInput = document.getElementById('image-upload');
+        const file = fileInput.files[0];
+        // 在这里执行图片上传的操作
+        console.log('已选择图片:', file);
+    }
+    // 上传文件
+    function uploadFile() {
+        const fileInput = document.getElementById('file-upload');
+        const file = fileInput.files[0];
+        // 在这里执行文件上传的操作
+        console.log('已选择文件:', file);
+    }
+    // 打开设置弹窗
+    function openSettings() {
+        document.getElementById('overlay').style.display = 'block';
+    }
+    // 关闭设置弹窗
+    function closeSettings() {
+        document.getElementById('overlay').style.display = 'none';
+    }
+    // 保存设置
+    function saveSettings() {
+        const newName = document.getElementById('new-name').value;
+        const newAge = document.getElementById('new-age').value;
+        // 在这里执行保存设置的操作
+        console.log('新姓名:', newName);
+        console.log('新年龄:', newAge);
+        // 更新个人信息展示
+        document.getElementById('name').textContent = "姓名：" + newName;
+        document.getElementById('age').textContent = "年龄：" + newAge;
+        closeSettings();
+    }
+    // 发表文章
+    function publishArticle() {
+        const editorContent = document.querySelector('#editor-container').innerHTML;
+        // 这里根据需要执行保存文章的操作，可以发送到后端服务器进行存储
+        console.log('文章内容:', editorContent);
+    }
+</script>
+
 </body>
 </html>
