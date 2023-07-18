@@ -22,6 +22,7 @@
     #profile {
       text-align: center;
       margin-bottom: 20px;
+      cursor: pointer;
     }
 
     #profile img {
@@ -134,14 +135,17 @@
   </div>
 
   <script>
-    // 弹出头像上传弹窗
-    document.querySelector("#profile img").addEventListener("click", function() {
-      document.getElementById("popup").style.display = "block";
+    // 弹出、关闭头像上传弹窗
+    var profileImage = document.querySelector("#profile img");
+    var popup = document.getElementById("popup");
+    var closeBtn = document.querySelector("#close");
+
+    profileImage.addEventListener("click", function() {
+      popup.style.display = "block";
     });
 
-    // 关闭头像上传弹窗
-    document.querySelector("#close").addEventListener("click", function() {
-      document.getElementById("popup").style.display = "none";
+    closeBtn.addEventListener("click", function() {
+      popup.style.display = "none";
     });
 
     // 页面加载完成后获取已上传的文件列表并展示
