@@ -111,21 +111,6 @@ z-index: 999;
         cursor: pointer;
     }
 </style>
-
-</head>
-<body>
-<!-- 省略其他内容 -->
-<!-- 添加头像上传弹窗 -->
-<div id="overlay">
-<div id="upload-popup">
-<span class="close" onclick="closeUploadPopup()">✖</span>
-<h2>上传头像</h2>
-<input type="file" id="upload-avatar" accept="image/*">
-<button onclick="uploadAvatar()">上传</button>
-</div>
-</div>
-}
-</style>
 </head>
 <body>
 <div id="container">
@@ -176,6 +161,15 @@ z-index: 999;
 <!-- 这里是富文本编辑器的容器 -->
 </div>
 <button onclick="publishArticle()">发表</button>
+<!-- 添加头像上传弹窗 -->
+<div id="overlay">
+<div id="upload-popup">
+<span class="close" onclick="closeUploadPopup()">✖</span>
+<h2>上传头像</h2>
+<input type="file" id="upload-avatar" accept="image/*">
+<button onclick="uploadAvatar()">上传</button>
+</div>
+</div>
 </div>
 <script>
     // 生成随机数据
