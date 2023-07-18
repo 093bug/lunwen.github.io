@@ -40,13 +40,26 @@
             padding: 20px;
             margin-bottom: 20px;
         }
+        #settings {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        #settings button {
+            background-color: #666;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div id="container">
         <div id="sidebar">
             <h1>个人简介</h1>
-            <img src="avatar.jpg" alt="个人头像">
+            <img id="avatar" src="avatar.jpg" alt="个人头像">
             <p id="name">姓名：Loading...</p>
             <p id="age">年龄：Loading...</p>
             <p id="location">所在地：Loading...</p>
@@ -54,11 +67,13 @@
         <div id="main-content">
             <div class="upload-section">
                 <h2>上传图片</h2>
-                <!-- 在这里添加上传图片的表单 -->
+                <input type="file" id="image-upload">
+                <button onclick="uploadImage()">上传</button>
             </div>
             <div class="upload-section">
                 <h2>上传文件</h2>
-                <!-- 在这里添加上传文件的表单 -->
+                <input type="file" id="file-upload">
+                <button onclick="uploadFile()">上传</button>
             </div>
             <div class="article">
                 <h2>发表文章</h2>
@@ -68,6 +83,20 @@
                 <h2>展示文章</h2>
                 <!-- 在这里展示已发布的文章 -->
             </div>
+        </div>
+    </div>
+
+    <div id="settings">
+        <button onclick="openSettings()">设置</button>
+    </div>
+
+    <div id="overlay" style="display: none;">
+        <div id="settings-popup">
+            <h2>设置</h2>
+            <input type="text" id="new-name" placeholder="新姓名"><br>
+            <input type="text" id="new-age" placeholder="新年龄"><br>
+            <button onclick="saveSettings()">保存</button>
+            <button onclick="closeSettings()">取消</button>
         </div>
     </div>
 
@@ -102,6 +131,48 @@
         window.onload = function() {
             updateProfile();
         };
+
+        // 上传图片
+        function uploadImage() {
+            const fileInput = document.getElementById('image-upload');
+            const file = fileInput.files[0];
+            // 在这里执行图片上传的操作
+            console.log('已选择图片:', file);
+        }
+
+        // 上传文件
+        function uploadFile() {
+            const fileInput = document.getElementById('file-upload');
+            const file = fileInput.files[0];
+            // 在这里执行文件上传的操作
+            console.log('已选择文件:', file);
+        }
+
+        // 打开设置弹窗
+        function openSettings() {
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        // 关闭设置弹窗
+        function closeSettings() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // 保存设置
+        function saveSettings() {
+            const newName = document.getElementById('new-name').value;
+            const newAge = document.getElementById('new-age').value;
+
+            // 在这里执行保存设置的操作
+            console.log('新姓名:', newName);
+            console.log('新年龄:', newAge);
+
+            // 更新个人信息展示
+            document.getElementById('name').textContent = "姓名：" + newName;
+            document.getElementById('age').textContent = "年龄：" + newAge;
+
+            closeSettings();
+        }
     </script>
 </body>
 </html>
