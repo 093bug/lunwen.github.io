@@ -17,11 +17,17 @@
             background-color: #333;
             padding: 20px;
         }
+        #sidebar img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
         #main-content {
             flex-grow: 1;
             padding: 20px;
         }
-        h1 {
+        h1, h2 {
             color: #fff;
         }
         .upload-section {
@@ -40,7 +46,10 @@
     <div id="container">
         <div id="sidebar">
             <h1>个人简介</h1>
-            <p>这里是个人简介的内容。</p>
+            <img src="avatar.jpg" alt="个人头像">
+            <p id="name">姓名：Loading...</p>
+            <p id="age">年龄：Loading...</p>
+            <p id="location">所在地：Loading...</p>
         </div>
         <div id="main-content">
             <div class="upload-section">
@@ -61,5 +70,38 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // 生成随机数据
+        function generateRandomData() {
+            const names = ["张三", "李四", "王五", "赵六"];
+            const locations = ["北京", "上海", "广州", "深圳", "成都"];
+            const ages = [20, 25, 30, 35, 40];
+        
+            const randomIndex = Math.floor(Math.random() * names.length);
+            const randomName = names[randomIndex];
+            const randomLocation = locations[randomIndex];
+            const randomAge = ages[randomIndex];
+        
+            return {
+                name: randomName,
+                location: randomLocation,
+                age: randomAge
+            };
+        }
+        
+        // 更新个人信息展示
+        function updateProfile() {
+            const profile = generateRandomData();
+            document.getElementById('name').textContent = "姓名：" + profile.name;
+            document.getElementById('age').textContent = "年龄：" + profile.age;
+            document.getElementById('location').textContent = "所在地：" + profile.location;
+        }
+        
+        // 页面加载完成后更新个人信息
+        window.onload = function() {
+            updateProfile();
+        };
+    </script>
 </body>
 </html>
