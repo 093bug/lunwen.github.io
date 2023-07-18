@@ -52,6 +52,81 @@
             padding: 5px 10px;
             margin-left: 10px;
             cursor: pointer;
+        /* 添加头像上传弹窗相关样式 */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 999;
+        }
+        
+        #upload-popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        #upload-popup h2 {
+            color: #000;
+        }
+        
+        #upload-popup input[type="file"] {
+            margin-bottom: 10px;
+        }
+        
+        #upload-popup button {
+            background-color: #666;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        #upload-popup .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: red;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* 添加富文本编辑器的样式 */
+        .editor {
+            background-color: #fff;
+            color: #000;
+            padding: 20px;
+        }
+
+        .editor button {
+            background-color: #666;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 省略其他内容 -->
+
+    <!-- 添加头像上传弹窗 -->
+    <div id="overlay">
+        <div id="upload-popup">
+            <span class="close" onclick="closeUploadPopup()">&#10006;</span>
+            <h2>上传头像</h2>
+            <input type="file" id="upload-avatar" accept="image/*">
+            <button onclick="uploadAvatar()">上传</button>
+        </div>
+    </div>
         }
     </style>
 </head>
@@ -99,6 +174,16 @@
             <button onclick="closeSettings()">取消</button>
         </div>
     </div>
+    <!-- 添加发表文章功能 -->
+    <div class="article">
+        <h2>发表文章</h2>
+        <div id="editor" class="editor">
+    <!-- 这里是富文本编辑器的容器 -->
+        </div>
+        <button onclick="publishArticle()">发表</button>
+    </div>
+
+  
 
     <script>
         // 生成随机数据
@@ -172,6 +257,12 @@
             document.getElementById('age').textContent = "年龄：" + newAge;
 
             closeSettings();
+        }
+        // 发表文章
+        function publishArticle() {
+            const editorContent = document.querySelector('#editor-container').innerHTML;
+            // 这里根据需要执行保存文章的操作，可以发送到后端服务器进行存储
+            console.log('文章内容:', editorContent);
         }
     </script>
 </body>
