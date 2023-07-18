@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人主页</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        #container {
+            display: flex;
+        }
+        #sidebar {
+            width: 200px;
+            background-color: #333;
+            padding: 20px;
+        }
+        #main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        h1 {
+            color: #fff;
+        }
+        .upload-section {
+            background-color: #222;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .article {
+            background-color: #444;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="sidebar">
+            <h1>个人简介</h1>
+            <p>这里是个人简介的内容。</p>
+        </div>
+        <div id="main-content">
+            <div class="upload-section">
+                <h2>上传图片</h2>
+                <!-- 在这里添加上传图片的表单 -->
+            </div>
+            <div class="upload-section">
+                <h2>上传文件</h2>
+                <!-- 在这里添加上传文件的表单 -->
+            </div>
+            <div class="article">
+                <h2>发表文章</h2>
+                <!-- 在这里添加发表文章的表单 -->
+            </div>
+            <div class="article">
+                <h2>展示文章</h2>
+                <!-- 在这里展示已发布的文章 -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
